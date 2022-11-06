@@ -4,14 +4,20 @@ include env.$(ENVIRONMENT).mk
 
 .DEFAULT_GOAL := help
 
-#.PHONY: all
-#all: switch-kubectl-context deploy-all
+.PHONY: all
+all: create-efi create-disk-img
 
 .PHONY: preflight
 ## Check requirements
 preflight:
 	@command -v objcopy >/dev/null 2>&1 || (echo "## Need objcopy command" && false)
 	@command -v objdump >/dev/null 2>&1 || (echo "## Need objdump command" && false)
+	@command -v genimage >/dev/null 2>&1 || (echo "## Need genimage command" && false)
+
+.PHONY: create-disk-img
+create-disk-img:
+	@./scripts/genimage-efi.sh -c ./configs/genimage-efi.cfg
+
 
 .PHONY: create-efi
 ## Create EFI Image using objcopy 
