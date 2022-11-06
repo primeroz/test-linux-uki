@@ -17,6 +17,9 @@ KVMDISPLAY="-display sdl,gl=on"
 DISKIMG=${CI_PROJECT_DIR}/output/disk.img
 
   #-net nic,model=virtio -net user \
+
+  #-netdev user,id=mynet0,hostfwd=tcp::${VMN}2222-:22 \
+  #-device virtio-net-pci,netdev=mynet0,bootindex=4,romfile="" \
 qemu-system-x86_64 -no-reboot -enable-kvm \
   -bios /usr/share/ovmf/x64/OVMF.fd \
   -drive file=${DISKIMG},index=0,media=disk,if=virtio \
@@ -24,8 +27,7 @@ qemu-system-x86_64 -no-reboot -enable-kvm \
   -smp cpus=2 \
   -m 4096 \
   -machine type=pc,accel=kvm \
-  -netdev user,id=mynet0,hostfwd=tcp::${VMN}2222-:22 \
-  -device virtio-net-pci,netdev=mynet0,bootindex=4,romfile="" \
+  -net none \
   $KVMDISPLAY \
   $virtfs_share
 

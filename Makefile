@@ -22,6 +22,7 @@ create-disk-img:
 .PHONY: create-efi
 ## Create EFI Image using objcopy 
 create-efi: preflight
+	@echo "Creating EFI Image with kernel:$(KERNEL_FILE) initrd:$(INITRD_FILE)"
 	@stub_line=$$(objdump -h "$(SYSTEMD_STUB_FILE)" | tail -2 | head -1) && \
 	stub_size=0x$$(echo "$$stub_line" | awk '{print $$3}') && \
   stub_offs=0x$$(echo "$$stub_line" | awk '{print $$4}') && \

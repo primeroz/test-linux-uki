@@ -55,7 +55,7 @@ mkdir -p ${ROOTPATH_TMP}/img/Apps
 # fi
 
 
-rm -f ${CI_PROJECT_DIR}/output/disk.img
+rm -rf ${CI_PROJECT_DIR}/output
 mkdir ${CI_PROJECT_DIR}/output
 genimage \
 	--rootpath "${ROOTPATH_TMP}"   \
