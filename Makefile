@@ -21,6 +21,9 @@ create-disk-img:
 
 .PHONY: create-efi
 ## Create EFI Image using objcopy 
+#  splash_offs=$$((cmdline_offs + $$(stat -c%s "$(CMDLINE_FILE)"))) && \
+#  --add-section .splash="$(SPLASH_FILE)" --change-section-vma .splash=$$(printf 0x%x $$splash_offs) \
+
 create-efi: preflight
 	@echo "Creating EFI Image with kernel:$(KERNEL_FILE) initrd:$(INITRD_FILE)"
 	@stub_line=$$(objdump -h "$(SYSTEMD_STUB_FILE)" | tail -2 | head -1) && \
@@ -28,13 +31,11 @@ create-efi: preflight
   stub_offs=0x$$(echo "$$stub_line" | awk '{print $$4}') && \
   osrel_offs=$$((stub_size + stub_offs)) && \
   cmdline_offs=$$((osrel_offs + $$(stat -c%s "$(OSRELEASE_FILE)"))) && \
-  splash_offs=$$((cmdline_offs + $$(stat -c%s "$(CMDLINE_FILE)"))) && \
   linux_offs=$$((splash_offs + $$(stat -c%s "$(SPLASH_FILE)"))) && \
   initrd_offs=$$((linux_offs + $$(stat -c%s "$(KERNEL_FILE)"))) && \
   objcopy \
     --add-section .osrel="$(OSRELEASE_FILE)" --change-section-vma .osrel=$$(printf 0x%x $$osrel_offs) \
     --add-section .cmdline="$(CMDLINE_FILE)" --change-section-vma .cmdline=$$(printf 0x%x $$cmdline_offs) \
-    --add-section .splash="$(SPLASH_FILE)" --change-section-vma .splash=$$(printf 0x%x $$splash_offs) \
     --add-section .linux="$(KERNEL_FILE)" --change-section-vma .linux=$$(printf 0x%x $$linux_offs) \
     --add-section .initrd="$(INITRD_FILE)" --change-section-vma .initrd=$$(printf 0x%x $$initrd_offs) \
     "$(SYSTEMD_STUB_FILE)" "$(OUTPUT_EFI_FILE)"

@@ -11,8 +11,8 @@ virtfs_share=""
 
 #KVMDISPLAY="-display gtk,gl=on -vga virtio"
 #KVMDISPLAY="-display gtk,gl=on,grab-on-hover=on -device virtio-vga,xres=1280,yres=800"
-#KVMDISPLAY="-display gtk"
-KVMDISPLAY="-display sdl,gl=on"
+KVMDISPLAY="-display gtk"
+#KVMDISPLAY="-display sdl,gl=on"
 
 DISKIMG=${CI_PROJECT_DIR}/output/disk.img
 
