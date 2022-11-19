@@ -1,0 +1,11 @@
+NAME="Coinbox"
+ID=coinbox
+ID_LIKE=buildroot
+BUILD_ID=rolling
+PRETTY_NAME="Coinbox"
+ANSI_COLOR="32;1;24;144;200"
+HOME_URL="https://coinbox.org/"
+DOCUMENTATION_URL="https://wiki.coinbox.org/"
+SUPPORT_URL="https://coinbox.org/"
+BUG_REPORT_URL="https://bugs.coinbox.org/"
+LOGO=manjarolinux

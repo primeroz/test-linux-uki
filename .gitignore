@@ -1,2 +1,7 @@
-assets/
+!assets/
+assets/*
+!assets/cmdline.txt
+!assets/os-release
+!assets/splash.bmp
+!assets/efi-part
 output/
